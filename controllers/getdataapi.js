@@ -5,14 +5,14 @@ const getData = async function(req,res) {
     try{
         const data = await myExecute(query);
         if(data.length > 0){
-            res.status(200).send(data);
+            res.status(200).json(data);
         }
         else{
             res.status(404).json({message:'Data not found..!'});
         }
     }
     catch(err){
-        res.status(403).send(err);
+        res.status(403).json(err);
     }
 }
 module.exports = getData;
