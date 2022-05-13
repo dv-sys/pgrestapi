@@ -14,17 +14,3 @@ async function myExecute(query){
 }
 
 module.exports = {myExecute};
-
-/*const myExecute = (req,res) => {
-    client.query("SELECT * FROM users", (err,result)=>{
-        if(!err){
-            res.send(result);
-        }
-        else{
-            res.send(err);
-        }
-    })
-    client.end;    
-}
-module.exports = myExecute;
-*/
