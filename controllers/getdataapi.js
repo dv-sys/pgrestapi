@@ -1,17 +1,18 @@
-const client = require("./connection.js");
-const express = require("express");
-const app = express();
+const {myExecute}  = require("../helper/corefuncs");
 
-const getData = (req,res) => {
-    client.query("SELECT * FROM users", (err,result)=>{
-        if(!err){
-            res.send(result.rows);
+const getData = async function(req,res) {
+    const query = "SELECT * FROM users";
+    try{
+        const data = await myExecute(query);
+        if(data.length > 0){
+            res.status(200).send(data);
         }
         else{
-            res.json({message:"Data not Found..!"});
+            res.status(404).json({message:'Data not found..!'});
         }
-    })
-    client.end;    
+    }
+    catch(err){
+        res.status(403).send(err);
+    }
 }
-
 module.exports = getData;

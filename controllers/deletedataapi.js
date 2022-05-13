@@ -1,17 +1,17 @@
-const client = require("./connection.js");
+const {myExecute}  = require("../helper/corefuncs");
 
-const deleteData = (req,res) => {
+const deleteData = async (req,res) => {
     const  id = req.params.id;
-    const delQ = `DELETE FROM users WHERE id=${id}`;
-    client.query(delQ, (err,result)=>{
-        if(!err){
-            res.json({message:"Data Deleted successfully"});
+    const query = `DELETE FROM users WHERE id=${id}`;
+    try{
+        const result = await myExecute(query);
+        if(result){
+            res.status(200).json({message:"Data Deleted Successfully"});    
         }
-        else{
-            res.json({message:"Data not Deleted..!"});
-        }
-    })
-    client.end;  
+    }
+    catch(err){
+        res.status(403).json(err);
+    } 
 }
 
 module.exports = deleteData;

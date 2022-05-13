@@ -1,18 +1,22 @@
-const client = require("./connection.js");
 const express = require("express");
 const app = express();
+const {myExecute}  = require("../helper/corefuncs");
 
-const getselData = (req,res) => {
+const getselData = async (req,res) => {
     const id = req.params.id;
-    client.query(`SELECT * FROM users WHERE id=${id}`, (err,result)=>{
-        if(!err){
-            res.send(result.rows);
+    const query = `SELECT * FROM users WHERE id=${id}`; 
+    try{
+        const data = await myExecute(query);
+        if(data.length > 0){
+            res.status(200).send(data);
         }
         else{
-            res.json({message:"Data not Found..!"});
+            res.status(404).json({message:'Data not found..!'});
         }
-    })
-    client.end;    
+    }
+    catch(err){
+        res.status(403).send(err);
+    }
 }
 
 module.exports = getselData;

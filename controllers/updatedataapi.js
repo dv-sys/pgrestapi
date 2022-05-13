@@ -1,20 +1,20 @@
-const client = require("./connection.js");
+const {myExecute}  = require("../helper/corefuncs");
 
-const updateData = (req,res) => {
+const updateData = async (req,res) => {
     
     const {id,first_name,last_name,city} = req.body;
-    const updQ = `UPDATE users SET first_name='${first_name}',last_name='${last_name}',city='${city}'
+    const query = `UPDATE users SET first_name='${first_name}',last_name='${last_name}',city='${city}'
                   WHERE id=${id}`;
-    //res.json({query:insQ}); 
-    client.query(updQ, (err,result)=>{
-        if(!err){
-            res.json({message:"Data Updated successfully"});
+    
+    try{
+        const result = await myExecute(query);
+        if(result){
+            res.status(200).json({message:"Data Updated Successfully"});    
         }
-        else{
-            res.json({message:"Data not Updated..!"});
-        }
-    })
-    client.end;  
+    }
+    catch(err){
+        res.status(403).json(err);
+    } 
 }
 
 module.exports = updateData;

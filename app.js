@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/',route);
 
-app.set('port',process.env.PORT || 8080);
+app.set('port',process.env.PORT || 8000);
+
 
 module.exports = app;
