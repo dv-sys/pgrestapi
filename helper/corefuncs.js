@@ -8,7 +8,7 @@ async function myExecute(query){
         return result.rows;    
     }
     catch(err){
-        throw err;
+        throw err.message;
     }
     client.end
 }
