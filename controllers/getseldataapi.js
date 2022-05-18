@@ -18,7 +18,7 @@ const getselData = async (req,res) => {
         }
     }
     catch(err){
-        res.status(403).json(err);
+        res.status(403).json(err.message);
     }
 }
 

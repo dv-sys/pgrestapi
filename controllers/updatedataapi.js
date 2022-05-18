@@ -13,8 +13,12 @@ const updateData = async (req,res,next) => {
         }
     }
     catch(err){
+<<<<<<< HEAD
         throw err.message;
         //res.status(403).json(err.message);
+=======
+        res.status(403).json(err.message);
+>>>>>>> 46f40f66a0ebd3e78ca61fd903cb95c3507cd84b
     } 
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const {myExecute} = require('../helper/corefuncs.js');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
@@ -30,6 +31,22 @@ const verifyToken = async (req, res, next) => {
      //res.status(401).send('Username or password not matched');
      res.redirect('/?err=invalid');
   }
+=======
+const jwt = require("jsonwebtoken");
+const config = process.env;
+
+const verifyToken = (req, res, next) => {
+  const token = req.body.token || req.query.token || req.headers["access-token"];
+  if (!token) {
+    return res.status(403).send("A token is required for authentication");
+  }
+  try {
+    const decoded = jwt.verify(token, config.JWT_KEY);
+  } catch (err) {
+    return res.status(401).send(err.message);
+  }
+  return next();
+>>>>>>> 46f40f66a0ebd3e78ca61fd903cb95c3507cd84b
 };
 
 module.exports = verifyToken;
