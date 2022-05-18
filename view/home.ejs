@@ -1,0 +1,19 @@
+<%- include('nav'); -%>
+    <div class="container mt-3">
+        <div><h3>Users</h3></div>
+        <% data.forEach(function(row) { %>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <b><i class="fa-solid fa-user"></i> <%= row.first_name + " " + row.last_name %></b>
+                    <a href="/deleteuser/<%= row.id %>?_method=DELETE"> <i class="fa-solid fa-trash-can" style="float:right;font-size:14pt;color:red;margin-right: 10px;"></i></a>
+                    <a href="/edituser/<%= row.id %>"><i class="fa-solid fa-pen-to-square" style="float:right;font-size:14pt;margin-right: 10px;"></i></a>
+                </div>
+                <div class="card-body cb">
+                    <div class="card-text"><b>User ID:</b> <%= row.id %></div>
+                    <div class="card-text"><b>Email:</b> <%= row.email %></div>
+                    <div class="card-text"><b>City:</b>  <%= row.city %></div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+<%- include('footer'); -%>

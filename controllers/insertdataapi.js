@@ -1,34 +1,28 @@
-const Joi = require('joi');
 const { redirect } = require("express/lib/response");
 const {myExecute}  = require("../helper/corefuncs");
+const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const insertData = async (req,res) => {
-    const {id,first_name,last_name,city} = req.body;
-    
-    /*
-    //validations
-    const schema = Joi.object({
-        first_name: Joi.string().min(3).max(15).required()
-    });
-
-    let result = schema.validate(req.body);
-    if(result.error){
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }*/
-
-    const query = `INSERT INTO users (id,first_name,last_name,city) VALUES (${id},'${first_name}','${last_name}','${city}') `;
+    //console.log(req.body);
+    const {first_name,last_name,email,city,password} = req.body;
+    const cq = "SELECT id FROM users ORDER BY id desc LIMIT 1";
+    const idres = await myExecute(cq);
+    const maxid = idres[0].id + 1;
+    encpass = await bcrypt.hash(password, 10); 
+    const query = `INSERT INTO users (id,first_name,last_name,city,email,password) VALUES (${maxid},'${first_name}','${last_name}','${city}','${email}','${encpass}') `;
     //res.json({query:query});
     try{
         const result = await myExecute(query);
         if(result){
-            res.status(200).json({message:"Data Inserted Successfully"});    
+            return "Data Inserted Successfully";
+            //res.status(200).json({message:"Data Inserted Successfully"});    
         }
     }
     catch(err){
-        res.status(403).json(err);
+        throw err.message;
+        //res.status(403).json(err.message);
     }
-
 }
 
 module.exports = insertData;

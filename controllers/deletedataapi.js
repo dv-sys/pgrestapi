@@ -6,11 +6,13 @@ const deleteData = async (req,res) => {
     try{
         const result = await myExecute(query);
         if(result){
-            res.status(200).json({message:"Data Deleted Successfully"});    
+            return "Data Deleted Successfully";
+            //res.status(200).json({message:"Data Deleted Successfully"});    
         }
     }
     catch(err){
-        res.status(403).json(err);
+        //res.status(403).json(err);
+        throw err.message;
     } 
 }
 

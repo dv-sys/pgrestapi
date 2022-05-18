@@ -1,14 +1,16 @@
 const {myExecute}  = require("../helper/corefuncs");
 
 const getData = async function(req,res) {
-    const query = "SELECT * FROM users";
+    const query = "SELECT * FROM users ORDER BY id DESC";
     try{
         const data = await myExecute(query);
         if(data.length > 0){
-            res.status(200).json(data);
+            return data;
+            //res.status(200).json(data);
         }
         else{
-            res.status(404).json({message:'Data not found..!'});
+            return {message:'Data not found..!'};
+            //res.status(404).json({message:'Data not found..!'});
         }
     }
     catch(err){
